@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta name="description" content="Get the events for all Gentle Mates's games">
+    <meta property="og:site_name" content="Gentle Mates Calendar">
+    <meta property="og:url" content="https://m8-calendar.com">
+    <meta property="og:title" content="Gentle Mates Calendar">
+    <meta property="og:description" content="Get the events for all Gentle Mates's games">
+    <meta property="og:image" content="logo.png">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gentle Mates Calendar - All games & all tournaments</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#f6ca33">
+    <link rel="icon" href="favicon.ico" />
+    <meta name="msapplication-TileColor" content="#f6ca33">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- CSS/JS/fonts -->
+    <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href='assets/fullcalendar/packages/core/main.css' rel='stylesheet' />
+    <link href='assets/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src='assets/fullcalendar/packages/core/main.js'></script>
+    <script src='assets/fullcalendar/packages/interaction/main.js'></script>
+    <script src='assets/fullcalendar/packages/daygrid/main.js'></script>
+    <script src='assets/fullcalendar/packages/list/main.js'></script>
+    <script src='assets/fullcalendar/packages/google-calendar/main.js'></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'interaction', 'dayGrid', 'list', 'googleCalendar' ],
+          googleCalendarApiKey: 'AIzaSyC_A63SM9mLz0bFxFHr_C5E4Cgxz2jeV_s',
+          events: {
+            googleCalendarId: 'vitality.gg_om8iivoss1u4vo9k0ohg6qao40@group.calendar.google.com',
+            color: '#B8F500',   // an option!
+            textColor: '#000' // an option!
+          },
+
+          // select event
+          eventClick: function(event) {
+            // get data (empty if undefined)
+            var date = event.event.start.toLocaleDateString();
+            if (event.event.start.getHours() != 0) {
+              date = date.concat(" - " + event.event.start.toLocaleTimeString());
+            }
+            var description = event.event.extendedProps.description ? event.event.extendedProps.description : "";
+            var location = event.event.extendedProps.location ? event.event.extendedProps.location : "";
+
+            // update ui
+            $('#modal-title').html(event.event.title);
+            $('#modal-body-time').html(date);
+            $('#modal-body-desc').html(description);
+            $('#modal-body-location').html(location);
+            $('#calendar-modal').modal();
+            
+            // don't navigate in main tab
+            event.jsEvent.preventDefault();
+          },
+
+          // UI related stuff
+          header: {
+            left: 'title',
+            center: 'month,agendaWeek,agendaDay',
+            right: 'prev,next,today'
+          },
+          selectable: true,
+          selectHelper: true,
+          eventBackgroundColor: "#fff",
+          eventBorderColor: "#fff",
+          eventTextColor: "#383838",
+          fixedWeekCount: false, // remove rows if no days
+          aspectRatio: 1.5,
+          buttonText: {
+            today:    'Today' // just to change text
+          },
+          color: 'yellow',
+          textColor: 'black',
+          firstDay: 1, // starts weeks on monday
+          eventTimeFormat: {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: false,
+          }
+        });
+        calendar.render();
+      });
+    
+    </script>
+  </head>
+  <body>
+    <div class="small-space"></div>
+
+    <div class="logo">
+      <img src="images/logo.svg">
+    </div>
+
+    <div class="xsmall-space"></div>
+    <div class="line"></div>
+
+    <div class="xsmall-space"></div>
+    <p class="title white center">UNOFFICIAL GENTLE <span class="tint-color">M8</span> CALENDAR</p>
+    
+    <div class="xxsmall-space"></div>
+    <p class="subtitle white center">All matches / All games of Gentle Mate players - Created by fans for fans</p>
+    <div class="medium-space"></div>
+    <div id="calendar-container">
+    <div id="calendar"></div>
+    </div>
+    <div class="small-space"></div>
+
+
+    <div id="calendar-modal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h2 id="modal-title"></h2>
+              </div>
+              <div id="modal-body" class="modal-body">
+                <p id="modal-body-time">[TIME]</p>
+                <p id="modal-body-desc">[DESC]</p>
+                <p id="modal-body-location">[LOCATION]</p>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="white center">
+      <p>Any idea, question or remark &#8595;</p>
+      <a href="https://twitter.com/ErwanJes" class="twitter-mention-button" target="_blank">
+        <img src="images/twitter.png" width="48" height="48">
+      </a>
+    </div>
+    <div class="small-space"></div>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9257927-11"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-9257927-11');
+    </script>
+  </body>
+</html>
